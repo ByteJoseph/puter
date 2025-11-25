@@ -1694,13 +1694,8 @@ function validate_signature_auth (url, action, options = {}) {
     const secret = config.url_signature_secret;
     const sha256 = require('js-sha256').sha256;
 
-    // before doing anything, see if this signature is valid for 'write' action, if yes that means every action is allowed
-    if ( !expired && query.get('signature') === sha256(`${uid}/write/${secret}/${query.get('expires')}`) )
-    {
-        return true;
-    }
     // if not, check specific actions
-    else if ( !expired && query.get('signature') === sha256(`${uid}/${action}/${secret}/${query.get('expires')}`) )
+    if ( !expired && query.get('signature') === sha256(`${uid}/${action}/${secret}/${query.get('expires')}`) )
     {
         return true;
     }
